@@ -2,3 +2,7 @@ sources:
   - policy:
       - git::github.com/conforma/policy//policy/lib?ref=92a695712ececf70da5295d5683140ec8c030985
       - ./policy
+    config:
+      exclude:
+        # For illustration purposes, showcase fine-grained exclusion mechanism.
+        - sbom.disallowed-license:sed

@@ -19,5 +19,5 @@ import data.lib
 deny contains result if {
 	some pkg in input.packages
 	regex.match(`\bGPL\b`, pkg.licenseDeclared)
-	result := lib.result_helper(rego.metadata.chain(), [pkg.name, pkg.licenseDeclared])
+	result := lib.result_helper_with_term(rego.metadata.chain(), [pkg.name, pkg.licenseDeclared], pkg.name)
 }
