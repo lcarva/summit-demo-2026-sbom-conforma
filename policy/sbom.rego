@@ -38,3 +38,11 @@ deny contains result if {
 _sboms contains input if {
 	input.SPDXID == "SPDXRef-DOCUMENT"
 }
+
+_sboms contains sbom if {
+	some attestation in input.attestations
+	statement := attestation.statement
+	statement.predicateType == "https://spdx.dev/Document"
+	sbom := statement.predicate
+	sbom.SPDXID == "SPDXRef-DOCUMENT"
+}
