@@ -15,9 +15,9 @@ import data.lib
 # description: Confirm packages in SBOM do not contain any disallowed licenses.
 # custom:
 #   short_name: disallowed-license
-#   failure_msg: Disallowed license found!
+#   failure_msg: "Package %q declares a disallowed license: %q"
 deny contains result if {
 	some pkg in input.packages
 	regex.match(`\bGPL\b`, pkg.licenseDeclared)
-	result := lib.result_helper(rego.metadata.chain(), [])
+	result := lib.result_helper(rego.metadata.chain(), [pkg.name, pkg.licenseDeclared])
 }
