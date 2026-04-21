@@ -46,3 +46,14 @@ _sboms contains sbom if {
 	sbom := statement.predicate
 	sbom.SPDXID == "SPDXRef-DOCUMENT"
 }
+
+_sboms contains sbom if {
+	some ref in ec.oci.image_tag_refs(input.image.ref)
+	endswith(ref, ".sbom")
+	manifest := ec.oci.image_manifest(ref)
+	some layer in manifest.layers
+	blob_ref := sprintf("%s@%s", [ref, layer.digest])
+	blob := ec.oci.blob(blob_ref)
+	sbom := json.unmarshal(blob)
+	sbom.SPDXID == "SPDXRef-DOCUMENT"
+}
